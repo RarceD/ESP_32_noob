@@ -34,8 +34,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/Tecnica2/Desktop/esp-idf/esp/hello_world/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
-  include("C:/Users/Tecnica2/Desktop/esp-idf/esp/hello_world/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
+  include("C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/hello_world/build/esp-idf/mbedtls/mbedtls/library/cmake_install.cmake")
+  include("C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/hello_world/build/esp-idf/mbedtls/mbedtls/include/cmake_install.cmake")
 
 endif()
 

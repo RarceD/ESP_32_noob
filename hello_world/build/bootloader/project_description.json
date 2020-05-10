@@ -1,12 +1,12 @@
 {
     "project_name":       "bootloader",
     "project_path":       "C:/Users/Tecnica2/Desktop/esp-idf/components/bootloader/subproject",
-    "build_dir":          "C:/Users/Tecnica2/Desktop/esp-idf/esp/hello_world/build/bootloader",
-    "config_file":        "C:/Users/Tecnica2/Desktop/esp-idf/esp/hello_world/sdkconfig",
+    "build_dir":          "C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/hello_world/build/bootloader",
+    "config_file":        "C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/hello_world/sdkconfig",
     "config_defaults":    "",
     "app_elf":            "bootloader.elf",
     "app_bin":            "bootloader.bin",
-    "git_revision":       "v4.0-dirty",
+    "git_revision":       "HEAD-HASH-NOTFOUND",
     "phy_data_partition": "",
     "monitor_baud" : "115200",
     "config_environment" : {

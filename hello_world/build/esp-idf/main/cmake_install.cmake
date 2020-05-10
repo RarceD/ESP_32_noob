@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Tecnica2/Desktop/esp-idf/esp/hello_world/main
+# Install script for directory: C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/hello_world/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
