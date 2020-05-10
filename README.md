@@ -36,21 +36,21 @@ Master/Slave - up to 7 slaves in a "piconet"
 ### 1.1.3. Data format:
 
 | Access Code |Header |Payload|
-|  :---: | :---: |
+|  :---: | :---: |:---: |
 | 72 bits |54 bits |0-2745 bits|
 This always happend in 625uS 
 
 * Access code: 
 
 | Preamble |Synchronization |Trailer|
-|  :---: | :---: |
+|  :---: | :---: |:---: |
 | 4 bits |64 bits |4 bits|
 Synchronization is from the master's ID
 
 * Header:
 
-| AM_ADDR |Type |Flow|ARQN|SEQN|HEC|
-|  :---: | :---: |  :---: | :---: |:---: |
+| AM_ADDR |Type |Flow     |ARQN   |SEQN  |HEC|
+|  :---: | :---: |  :---: | :---: |:---: |:---: |
 | 3 bits |4 bits |1 bits|1 bits|1 bits|8 bits|
 AM_ADDR: Active member address, one master 7 slaves
 Type: 12 packets for SCO and ACL
@@ -69,14 +69,16 @@ HEC: Header Error Check like CRC
 * They are in the application layer and the fix the bottom protocols.
 
 #### Host Stack:
+
 It mostly happens on top of them.
-| - |- |APPLICATION|-|-|
-|  :---: | :---: |  :---: | :---: |:---: |
-| TCS |OBEX |-|WAP|SDP|
-| - |- |RF COMM |-|-|
+| -      |-      |APPLICATION|    -  |     -|
+|  :---: | :---: |  :---:    | :---: |:---: |
+| TCS    |OBEX   |-          |WAP    |   SDP|
+| -      |-      |RF COMM    |      -|-     |
 | Lotgic Link Control + Adaption Protocol|
 
 #### Controller Stack:
+
 Chil level, it happends on hardware.
 | HCI (Host control Interface) AT commands |
 |  :---: |
