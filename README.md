@@ -12,6 +12,7 @@ Bluethoot:
 * Short Range
 * Low power 
 * Low data rate
+* f = ISM 2.400GHz and 79 channels                                  
 
 | Clasic Bluetooth       |BLE                    |
 |  :---:                 | :---:                 |
@@ -22,39 +23,39 @@ Bluethoot:
 |Class 4 - 0.5mW         | 10 mW max             |
 |Class 1 - 100mW         |  -                    |
 
-f = ISM 2.400GHz and 79 channels                                  |
-
 ### 1.1.2. Topology:
 
-Master/Slave - up to 7 slaves in a "piconet"
+Master/Slave:
 
-             - "parkel" slaves -> They are sleep but in the net
-
+* up to 7 slaves in a "piconet"
+* "parkel" slaves -> They are sleep but in the net
 * FHSS: Frecuency Hoppping Spread Spectum, it hops in frecuencies in order to not interfeer with other devise near it.
 * TDM: Time domain multiplexing, the master devise set time periods of 625uS to let the others on the network to comunicate with them. Every time happends the fecuency change. The connection between elements can be SCO (Synchronous Connection Oriented) or ACL (Asynchronous Connection-Less).
 
 ### 1.1.3. Data format:
 
+This always happend in 625uS 
+Synchronization is from the master's ID
+
 | Access Code |Header |Payload|
 |  :---: | :---: |:---: |
 | 72 bits |54 bits |0-2745 bits|
-This always happend in 625uS 
 
 * Access code: 
 
 | Preamble |Synchronization |Trailer|
 |  :---: | :---: |:---: |
 | 4 bits |64 bits |4 bits|
-Synchronization is from the master's ID
 
 * Header:
 
 | AM_ADDR |Type |Flow     |ARQN   |SEQN  |HEC|
 |  :---: | :---: |  :---: | :---: |:---: |:---: |
 | 3 bits |4 bits |1 bits|1 bits|1 bits|8 bits|
-AM_ADDR: Active member address, one master 7 slaves
-Type: 12 packets for SCO and ACL
-HEC: Header Error Check like CRC
+
+ - AM_ADDR: Active member address, one master 7 slaves
+ - Type: 12 packets for SCO and ACL
+ - HEC: Header Error Check like CRC
 
 * Payload (Data):
 
@@ -75,7 +76,7 @@ It mostly happens on top of them.
 |  :---: | :---: |  :---:    | :---: |:---: |
 | TCS    |OBEX   |-          |WAP    |   SDP|
 | -      |-      |RF COMM    |      -|-     |
-| Lotgic Link Control + Adaption Protocol|
+| Lotgic | Link |Control |Adaption |Protocol|
 
 #### Controller Stack:
 
