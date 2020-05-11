@@ -86,3 +86,23 @@ Chil level, it happends on hardware.
 | Link Manager Protocol |
 |  BasebandX/Link Controller |
 | Radio |
+
+### 1.2. GAP
+
+generic access profile 
+Makes your device visible to the outside world, is the protocol for get connected with others blue.
+
+
+### 1.3. GATT
+GATT is an acronym for the Generic Attribute Profile , and it defines the way that two Bluetooth Low Energy devices transfer data back and forth using concepts called Services and Characteristics. It makes use of a generic data protocol called the Attribute Protocol (ATT), which is used to store Services, Characteristics and related data in a simple lookup table using 16-bit IDs for each entry in the table.
+
+* connections are exclusive
+* BLE peripheral can only be connected to one central device at a time
+
+#### 1.3.1 Profiles
+Are a pre-defined collection of Services
+#### 1.3.2 Services
+A service can have one or more characteristics, and each service distinguishes itself from other servicesby means of a unique numeric ID called a UUID, which can be either 16-bit (for officially adopted BLEServices) 
+#### 1.3.3 Characteristics
+The lowest level concept in GATT transactions is the Characteristic, which encapsulates a single data point (though it may contain an array of related data. They are also used to send data back to the BLE peripheral, since you are also able to write to characteristic. 
+
