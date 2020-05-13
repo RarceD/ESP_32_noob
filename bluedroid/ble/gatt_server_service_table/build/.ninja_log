@@ -1993,3 +1993,13 @@
 55672	56811	6109211788088726	esp-idf/esp32/ld/esp32.project.ld	8a7e32431106ca40
 56812	60070	6109211820737210	gatt_server_service_table_demo.elf	6ffe1b345f93f9f3
 60070	60322	6109211823392884	.bin_timestamp	26fb616a8fa9e6d1
+44	6404	6110912919397196	build.ninja	3d4b7ee964b6ce3
+100	151	6109207141831138	bootloader-prefix/src/bootloader-stamp/bootloader-build	c142e81fa85037
+100	151	6109207141831138	bootloader/bootloader.elf	c142e81fa85037
+100	151	6109207141831138	bootloader/bootloader.bin	c142e81fa85037
+100	151	6109207141831138	bootloader/bootloader.map	c142e81fa85037
+102	421	6110912924513859	esp-idf/app_update/CMakeFiles/__idf_app_update.dir/esp_app_desc.c.obj	38371c3134f98df8
+422	523	6110912925505851	esp-idf/app_update/libapp_update.a	c9fa3c771dc5438b
+523	2717	6110912947239338	esp-idf/esp32/ld/esp32.project.ld	8a7e32431106ca40
+2718	6848	6110912988678525	gatt_server_service_table_demo.elf	6ffe1b345f93f9f3
+6849	7139	6110912991604592	.bin_timestamp	26fb616a8fa9e6d1
