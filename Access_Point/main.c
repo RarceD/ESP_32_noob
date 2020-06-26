@@ -1,4 +1,4 @@
-//This is just for testting the struct manipulation:
+//This is just for testing the struct manipulation:
 #include <stdio.h>
 #include <stdint.h>
 
