@@ -1,6 +1,6 @@
 #include <WiFi.h>
 
-const char *ssid = "Hotel_Config_Wifi";
+const char *ssid = "Hotel_Config_Lamp";
 const char *password = "hotel2020";
 
 WiFiServer server(80); // Set web server port number to 80
@@ -8,6 +8,43 @@ String header;         // Variable to store the HTTP request
 
 uint8_t wifi_name[30], wifi_pass[30];
 
+char web_compleat[] = "<!DOCTYPE html>\
+<html <head>\
+<meta name=\"viewport \" content=\"width=device-width, initial-scale=1\">\
+<style>\
+    html {\
+        font-family: Helvetica;\
+        display: inline-block;\
+        margin: 0px auto;\
+        background-color: #131e48;\
+        text-align: center;\
+        color: #7dbedc;\
+    }\
+    h4 {\
+        color: #d0ca17;\
+    }\
+</style>\
+</head>\
+<body>\
+    <h1>Hotel Credentials</h1>\
+    <h3>___________________ </h3>\
+    <span style=\"display:block; height: 40px; \"></span>\
+    <form action=\"action_page.php\"> Wifi Name: <input type=\"text \" name=\"wifi_name\"><br>\
+        Password: <input type=\"text\" name=\"wifi_pass\"><br>\
+        <h3>___________________ </h3>\
+        <h4>Select week day: </h4>\
+        Week (LMXJVSD): <input type=\"text\" name=\"week\">\
+        <h4>Select start time: </h4>\
+        Hours: <input type=\"text\" name=\"hours\">\
+        <h3>  </h3>\
+        <input type=\"Submit\">\
+        <h3>___________________ </h3>\
+    </form>\
+        <span style=\"display:block; height: 100px; \"></span>\
+        <h3> Hotel setup web page</h3>\
+        <h5> July - 2020</h5>\
+</body>\
+</html>";
 void setup()
 {
   Serial.begin(115200);
@@ -20,14 +57,13 @@ void setup()
   server.begin();
 
   while (!obtein_credentials())
-  {
-  }
+    ;
 }
 
 void loop()
 {
   Serial.println("I have pass so i can connected to wifi :)");
-  delay(1000);
+  delay(5000);
 }
 
 bool obtein_credentials()
@@ -76,16 +112,17 @@ bool obtein_credentials()
               for (uint8_t i = 0; i < (header.indexOf(" HTTP/1.1") - index_wifi_pass); i++)
               {
                 wifi_pass[i] = header.charAt(index_wifi_pass + i);
-                if(wifi_pass[i] == '+')
-                    wifi_pass[i] = ' ';
+                if (wifi_pass[i] == '+')
+                  wifi_pass[i] = ' ';
                 Serial.write(wifi_pass[i]);
               }
               Serial.println(" ");
               return true;
             }
             // Display the HTML web page
-            char texto[] = "<!DOCTYPE html><html>";
-            client.println(texto);
+            client.println(web_compleat);
+            /*
+            client.println("<!DOCTYPE html><html>");
             client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
             client.println("<link rel=\"icon\" href=\"data:,\">");
             client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; background-color: #1c2e75; text-align: center;color: #CACAC8; }");
@@ -104,6 +141,7 @@ bool obtein_credentials()
             client.println("<h5> July - 2020</h5>");
             client.println("</body></html>");
             client.println();
+            */
             break;
           }
           else
