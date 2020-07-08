@@ -1,8 +1,8 @@
 import json 
-from not_show import *
+import not_show 
 
 # convert into JSON:
-y = json.dumps(DEVISE_TO_ASK, indent = 4)
+y = json.dumps("hola", indent = 4)
 
 # the result is a JSON string:
-print(y)
+print(not_show.HOST_MQTT)

@@ -6,7 +6,15 @@ const char *password = "hotel2020";
 WiFiServer server(80); // Set web server port number to 80
 String header;         // Variable to store the HTTP request
 
-uint8_t wifi_name[30], wifi_pass[30];
+typedef struct
+{
+  char wifi_name[40];
+  char wifi_pass[40];
+  char week_day[7];
+  uint8_t hours_start[4][2];
+
+} AP_data_user;
+AP_data_user AP_data;
 
 char web_compleat[] = "<!DOCTYPE html>\
 <html <head>\
@@ -92,24 +100,63 @@ bool obtein_credentials()
             client.println("Content-type:text/html");
             client.println("Connection: close");
             client.println();
+            // Serial.println(header);
+            //The header is: GET /action_page.php?wifi_name=Wifi+hotel+12&wifi_pass=Havua1838&week=LMXJS&hours=12%3A34%2F17%3A34 HTTP/1.1
+
             if (header.indexOf("GET /action_page.php?wifi_name=") >= 0)
             {
               //GET /action_page.php?wifi_name=asd&wifi_pass=Fgh HTTP/1.1
-              uint8_t index_wifi_name = header.indexOf("wifi_name=") + 10;
+              uint8_t index_wifi_name = header.indexOf("&wifi_name=") + 11 + 21;
               uint8_t index_wifi_pass = header.indexOf("&wifi_pass=") + 11;
+              uint8_t index_week_day = header.indexOf("&week=") + 6;
+              uint8_t index_hours_start = header.indexOf("&hours=") + 7;
 
               Serial.println(" ");
-
-              for (uint8_t i = 0; i < (header.indexOf("&wifi_pass=") - index_wifi_name); i++)
+              Serial.println("USER: ");
+              //First I get the user
+              for (uint8_t i = 0; i < 30; i++)
               {
-                wifi_name[i] = header.charAt(index_wifi_name + i);
-                if (wifi_name[i] == '+')
-                  wifi_name[i] = ' ';
-                Serial.write(wifi_name[i]);
+                //I save the info in the struct
+                if (header.charAt(index_wifi_name + i) == '&')
+                  break;
+                else
+                  AP_data.wifi_name[i] = header.charAt(index_wifi_name + i);
+                if (AP_data.wifi_name[i] == '+')
+                  AP_data.wifi_name[i] = ' ';
+                Serial.write(AP_data.wifi_name[i]);
               }
               Serial.println(" ");
+              Serial.println("PASS:");
+              for (uint8_t i = 0; i < 30; i++)
+              {
+                //I save the info in the struct
+                if (header.charAt(index_wifi_pass + i) == '&')
+                  break;
+                else
+                  AP_data.wifi_pass[i] = header.charAt(index_wifi_pass + i);
+                if (AP_data.wifi_pass[i] == '+')
+                  AP_data.wifi_pass[i] = ' ';
+                Serial.write(AP_data.wifi_pass[i]);
+              }
+              Serial.println(" ");
+              Serial.println("WEEK DAY: ");
+              for (uint8_t i = 0; i < 30; i++)
+              {
+                //I save the info in the struct
+                if (header.charAt(index_wifi_pass + i) == '&')
+                  break;
+                else
+                  AP_data.week_day[i] = header.charAt(index_week_day + i);
+                if (AP_data.week_day[i] == '+')
+                  AP_data.week_day[i] = ' ';
+                Serial.write(AP_data.week_day[i]);
+              }
+              Serial.println(" ");
+              Serial.println(" ");
 
-              for (uint8_t i = 0; i < (header.indexOf(" HTTP/1.1") - index_wifi_pass); i++)
+
+              /*
+              for (uint8_t i = 0; i < (header.indexOf("&week=") - index_wifi_pass); i++)
               {
                 wifi_pass[i] = header.charAt(index_wifi_pass + i);
                 if (wifi_pass[i] == '+')
@@ -117,8 +164,9 @@ bool obtein_credentials()
                 Serial.write(wifi_pass[i]);
               }
               Serial.println(" ");
-              return true;
+              */
             }
+
             // Display the HTML web page
             client.println(web_compleat);
             /*
