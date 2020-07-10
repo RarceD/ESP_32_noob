@@ -1,3 +1,6 @@
 not_show.py
 tips.txt
 update.bin
+/build
+/dist
+/__pycache__
