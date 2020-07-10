@@ -2,9 +2,12 @@
 #!/usr/bin/python
 import paho.mqtt.client as mqtt
 # get the credentials of the devises
-from not_show import TOPICS_TO_SUBSCRIBE, HOST_MQTT, GET_INFO_DEVISES, TOPICS_TO_PUBLISH
+from not_show import intro_json, UPDATE_TOPICS, TOPICS_TO_SUBSCRIBE, HOST_MQTT, GET_INFO_DEVISES, TOPICS_TO_PUBLISH
 import sys
 import os
+import json
+import zlib
+import hashlib
 
 """
 For converting to windows:
@@ -26,7 +29,7 @@ else:
     business = str(sys.argv[1]).upper()
     devise = str(sys.argv[2]).upper()
     update_file_name = str(sys.argv[3])
-    print(update_file_name)
+    # print(update_file_name)
     # Check if it makes sense the words introduce:
     if (business == 'INFRIKO' and (devise == 'ESP32' or devise == 'ATMEGA')):
         print("Comienza el proceso de update...")
@@ -35,20 +38,31 @@ else:
         sys.exit()
 
 # First I open the file:
-file = open(update_file_name, "r")
-# I create the json
-json_update = file.read()
-# I close the file
+file = open(update_file_name, "rb")
+update_bin = file.read()
+# I create the string file and compress to zlib:
+update_zlib = zlib.compress(update_bin, level=-1)
+#Obtein the md5 checksum:
+md5_value = hashlib.md5(update_bin).hexdigest()
+# and close the file
 file.close()
+
+
 # Configure the mqtt client:
 mqttc = mqtt.Client()
-
 # I connect to broker:
 mqttc.connect(HOST_MQTT, 1883, 60)
-# I publish the update:
-mqttc.publish('test', json_update, 0, False)
+# I generate the first update json:
 
+intro_json['md5'] = md5_value
+intro_json['model'] = devise
+json_msg = json.dumps(intro_json)
+print(json_msg)
+mqttc.publish(UPDATE_TOPICS['esp32_intro'], json_msg, 0, True)
 """
+# I publish the update:
+
+
 # Suscribe to all the devises topics:
 mqttc.subscribe(TOPICS_TO_SUBSCRIBE['STATUS'], 0)
 mqttc.subscribe(TOPICS_TO_SUBSCRIBE['DATAS'], 0)
