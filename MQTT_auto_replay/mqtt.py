@@ -8,6 +8,8 @@ import os
 import json
 import zlib
 import hashlib
+import multiprocessing
+import time
 
 """
 For converting to windows:
@@ -41,14 +43,14 @@ else:
 # First I open the file:
 file = open(update_file_name, "rb")
 update_bin = file.read()
-# I create the string file and compress to zlib:
-update_zlib = zlib.compress(update_bin, level=-1)
 # Obtein the md5 checksum:
 md5_value = hashlib.md5(update_bin).hexdigest()
+# I create the string file and compress to zlib:
+update_zlib = zlib.compress(update_bin)
 # and close the file
 file.close()
 
-def on_message(mqttc, obj, msg):
+def received_message(mqttc, obj, msg):
     # I get the version of the firmware in order to increase when I finish the update
     intro_info = str(msg.payload)
     offset = intro_info.find('firmware') + len('firmware": "')
@@ -56,36 +58,25 @@ def on_message(mqttc, obj, msg):
     for i in range(0, 8):
         version += intro_info[offset + i]
     version = int(version[5:])
-    #copy the current version and increase 1 time
+    # Copy the current version and increase 1 time
     intro_json['firmware'] =intro_json['firmware'][:5] + str(version + 1)
     # Fill the json correctly:
     intro_json['md5'] = md5_value
     intro_json['model'] = devise
     topic_to_update = UPDATE_TOPICS['esp32_intro'].replace('x', business)
     json_msg = json.dumps(intro_json)
-    print(json_msg)
     mqttc.unsubscribe(topic_to_update, 0)
+    # I publish the new version json and then the version 
+    print('Increase the version')
+    mqttc.publish(UPDATE_TOPICS['esp32_bin'].replace('x', business), update_zlib, 0, True)
+    print('Publish the firmware in /bin ')
     mqttc.publish(topic_to_update, json_msg, 0, True)
-    print('in')
 
 # Configure the mqtt client:
 mqttc = mqtt.Client()
-mqttc.on_message = on_message
+mqttc.on_message = received_message
 # I connect to broker:
 mqttc.connect(HOST_MQTT, 1883, 60)
 # I generate the first update json:
 mqttc.subscribe(UPDATE_TOPICS['esp32_intro'].replace('x', business), 0)
 mqttc.loop_forever()
-
-"""
-# I publish the update:
-
-
-# Suscribe to all the devises topics:
-mqttc.subscribe(TOPICS_TO_SUBSCRIBE['DATAS'], 0)
-mqttc.subscribe(TOPICS_TO_SUBSCRIBE['HELLO'], 0)
-mqttc.subscribe('topic', 0)
-# mqttc.publish(TOPICS_TO_PUBLISH['SETUP'],
-#               GET_INFO_DEVISES['all_params'], 0, False)
-mqttc.loop_forever()
-"""
