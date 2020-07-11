@@ -26,12 +26,13 @@ if (len(sys.argv) != 4):
     print("Invalid number of parameters !!")
     sys.exit()
 else:
-    business = str(sys.argv[1]).upper()
-    devise = str(sys.argv[2]).upper()
+    business = str(sys.argv[1]).lower()
+    devise = str(sys.argv[2]).lower()
     update_file_name = str(sys.argv[3])
     # print(update_file_name)
     # Check if it makes sense the words introduce:
-    if (business == 'INFRIKO' and (devise == 'ESP32' or devise == 'ATMEGA')):
+    if ((business == 'infrico' or business == 'solidy')
+            and (devise == 'esp32' or devise == 'atmega')):
         print("Comienza el proceso de update...")
     else:
         print("Invalid parameters!!")
@@ -42,29 +43,45 @@ file = open(update_file_name, "rb")
 update_bin = file.read()
 # I create the string file and compress to zlib:
 update_zlib = zlib.compress(update_bin, level=-1)
-#Obtein the md5 checksum:
+# Obtein the md5 checksum:
 md5_value = hashlib.md5(update_bin).hexdigest()
 # and close the file
 file.close()
 
+def on_message(mqttc, obj, msg):
+    # I get the version of the firmware in order to increase when I finish the update
+    intro_info = str(msg.payload)
+    offset = intro_info.find('firmware') + len('firmware": "')
+    version = ''
+    for i in range(0, 8):
+        version += intro_info[offset + i]
+    version = int(version[5:])
+    #copy the current version and increase 1 time
+    intro_json['firmware'] =intro_json['firmware'][:5] + str(version + 1)
+    # Fill the json correctly:
+    intro_json['md5'] = md5_value
+    intro_json['model'] = devise
+    topic_to_update = UPDATE_TOPICS['esp32_intro'].replace('x', business)
+    json_msg = json.dumps(intro_json)
+    print(json_msg)
+    mqttc.unsubscribe(topic_to_update, 0)
+    mqttc.publish(topic_to_update, json_msg, 0, True)
+    print('in')
 
 # Configure the mqtt client:
 mqttc = mqtt.Client()
+mqttc.on_message = on_message
 # I connect to broker:
 mqttc.connect(HOST_MQTT, 1883, 60)
 # I generate the first update json:
+mqttc.subscribe(UPDATE_TOPICS['esp32_intro'].replace('x', business), 0)
+mqttc.loop_forever()
 
-intro_json['md5'] = md5_value
-intro_json['model'] = devise
-json_msg = json.dumps(intro_json)
-print(json_msg)
-mqttc.publish(UPDATE_TOPICS['esp32_intro'], json_msg, 0, True)
 """
 # I publish the update:
 
 
 # Suscribe to all the devises topics:
-mqttc.subscribe(TOPICS_TO_SUBSCRIBE['STATUS'], 0)
 mqttc.subscribe(TOPICS_TO_SUBSCRIBE['DATAS'], 0)
 mqttc.subscribe(TOPICS_TO_SUBSCRIBE['HELLO'], 0)
 mqttc.subscribe('topic', 0)
