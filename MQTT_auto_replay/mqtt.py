@@ -2,7 +2,7 @@
 #!/usr/bin/python
 import paho.mqtt.client as mqtt
 # get the credentials of the devises
-from not_show import intro_json, UPDATE_TOPICS, TOPICS_TO_SUBSCRIBE, HOST_MQTT, GET_INFO_DEVISES, TOPICS_TO_PUBLISH
+from not_show import intro_json, UPDATE_TOPICS, HOST_MQTT
 import sys
 import os
 import json
@@ -10,6 +10,7 @@ import zlib
 import hashlib
 import multiprocessing
 import time
+import base64
 
 """
 For converting to windows:
@@ -46,9 +47,13 @@ update_bin = file.read()
 # Obtein the md5 checksum:
 md5_value = hashlib.md5(update_bin).hexdigest()
 # I create the string file and compress to zlib:
-update_zlib = zlib.compress(update_bin)
+update_zlib = zlib.compress(update_bin, level=9)
+update_zlib_encoded = base64.b64encode(update_zlib)
 # and close the file
 file.close()
+
+
+# and close the file
 
 def received_message(mqttc, obj, msg):
     # I get the version of the firmware in order to increase when I finish the update
@@ -68,7 +73,7 @@ def received_message(mqttc, obj, msg):
     mqttc.unsubscribe(topic_to_update, 0)
     # I publish the new version json and then the version 
     print('Increase the version')
-    mqttc.publish(UPDATE_TOPICS['esp32_bin'].replace('x', business), update_zlib, 0, True)
+    mqttc.publish(UPDATE_TOPICS['esp32_bin'].replace('x', business), update_zlib_encoded, 0, True)
     print('Publish the firmware in /bin ')
     mqttc.publish(topic_to_update, json_msg, 0, True)
 

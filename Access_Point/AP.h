@@ -1,7 +1,4 @@
 //This is just for testing the struct manipulation:
-
-#ifndef AP
-#define AP
 #include <stdio.h>
 #include <stdint.h>
 
@@ -14,11 +11,4 @@ typedef struct
 
 } light_open_info;
 
-void modified_struct(light_open_info *lamp, uint8_t hola)
-{
-    lamp->starts[1] = hola;
-    lamp->week_day[1] = hola;
-    lamp->starts[1] = hola;
-}
-
-#endif
+void modified_struct(light_open_info *lamp, uint8_t hola);
