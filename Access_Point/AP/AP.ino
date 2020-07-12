@@ -11,7 +11,7 @@ typedef struct
   char wifi_name[40];
   char wifi_pass[40];
   char week_day[7];
-  uint8_t hours_start[4][2];
+  char hours_start[4][2];
 
 } AP_data_user;
 AP_data_user AP_data;
@@ -43,14 +43,20 @@ char web_compleat[] = "<!DOCTYPE html>\
         <h4>Select week day: </h4>\
         Week (LMXJVSD): <input type=\"text\" name=\"week\">\
         <h4>Select start time: </h4>\
-        Hours: <input type=\"text\" name=\"hours\">\
+        Hour 1: <input type=\"text\" name=\"hours1\">\
+        <h6>  </h6>\
+        Hour 2: <input type=\"text\" name=\"hours2\">\
+        <h6>  </h6>\
+        Hour 3: <input type=\"text\" name=\"hours3\">\
+        <h6>  </h6>\
+        Hour 4: <input type=\"text\" name=\"hours4\">\
         <h3>  </h3>\
         <input type=\"Submit\">\
         <h3>___________________ </h3>\
     </form>\
         <span style=\"display:block; height: 100px; \"></span>\
         <h3> Hotel setup web page</h3>\
-        <h5> July - 2020</h5>\
+        <h5> August - 2020</h5>\
 </body>\
 </html>";
 void setup()
@@ -100,19 +106,19 @@ bool obtein_credentials()
             client.println("Content-type:text/html");
             client.println("Connection: close");
             client.println();
-            // Serial.println(header);
-            //The header is: GET /action_page.php?wifi_name=Wifi+hotel+12&wifi_pass=Havua1838&week=LMXJS&hours=12%3A34%2F17%3A34 HTTP/1.1
-
             if (header.indexOf("GET /action_page.php?wifi_name=") >= 0)
             {
               //GET /action_page.php?wifi_name=asd&wifi_pass=Fgh HTTP/1.1
               uint8_t index_wifi_name = header.indexOf("&wifi_name=") + 11 + 21;
               uint8_t index_wifi_pass = header.indexOf("&wifi_pass=") + 11;
               uint8_t index_week_day = header.indexOf("&week=") + 6;
-              uint8_t index_hours_start = header.indexOf("&hours=") + 7;
+              uint8_t index_hours_start = header.indexOf("&hours1=") + 8;
+              uint8_t index_hours_start2 = header.indexOf("&hours2=") + 8;
+              uint8_t index_hours_start3 = header.indexOf("&hours3=") + 8;
+              uint8_t index_hours_start4 = header.indexOf("&hours4=") + 8;
 
               Serial.println(" ");
-              Serial.println("USER: ");
+              Serial.print("USER: ");
               //First I get the user
               for (uint8_t i = 0; i < 30; i++)
               {
@@ -126,7 +132,7 @@ bool obtein_credentials()
                 Serial.write(AP_data.wifi_name[i]);
               }
               Serial.println(" ");
-              Serial.println("PASS:");
+              Serial.print("PASS:");
               for (uint8_t i = 0; i < 30; i++)
               {
                 //I save the info in the struct
@@ -139,11 +145,11 @@ bool obtein_credentials()
                 Serial.write(AP_data.wifi_pass[i]);
               }
               Serial.println(" ");
-              Serial.println("WEEK DAY: ");
+              Serial.print("WEEK DAY: ");
               for (uint8_t i = 0; i < 30; i++)
               {
                 //I save the info in the struct
-                if (header.charAt(index_wifi_pass + i) == '&')
+                if (header.charAt(index_week_day + i) == '&')
                   break;
                 else
                   AP_data.week_day[i] = header.charAt(index_week_day + i);
@@ -152,44 +158,31 @@ bool obtein_credentials()
                 Serial.write(AP_data.week_day[i]);
               }
               Serial.println(" ");
+              Serial.print("TIME 1: ");
+              AP_data.hours_start[0][0] = header.charAt(index_hours_start);
+              AP_data.hours_start[0][1] = header.charAt(index_hours_start + 1);
+              AP_data.hours_start[1][0] = header.charAt(index_hours_start + 5);
+              AP_data.hours_start[1][1] = header.charAt(index_hours_start + 6);
+              Serial.write(AP_data.hours_start[0][0]);
+              Serial.write(AP_data.hours_start[0][1]);
+              Serial.print(":");
+              Serial.write(AP_data.hours_start[1][0]);
+              Serial.write(AP_data.hours_start[1][1]);
               Serial.println(" ");
-
-
-              /*
-              for (uint8_t i = 0; i < (header.indexOf("&week=") - index_wifi_pass); i++)
-              {
-                wifi_pass[i] = header.charAt(index_wifi_pass + i);
-                if (wifi_pass[i] == '+')
-                  wifi_pass[i] = ' ';
-                Serial.write(wifi_pass[i]);
-              }
+              Serial.print("TIME 2: ");
+              AP_data.hours_start[0][0] = header.charAt(index_hours_start2);
+              AP_data.hours_start[0][1] = header.charAt(index_hours_start2 + 1);
+              AP_data.hours_start[1][0] = header.charAt(index_hours_start2 + 5);
+              AP_data.hours_start[1][1] = header.charAt(index_hours_start2 + 6);
+              Serial.write(AP_data.hours_start[0][0]);
+              Serial.write(AP_data.hours_start[0][1]);
+              Serial.print(":");
+              Serial.write(AP_data.hours_start[1][0]);
+              Serial.write(AP_data.hours_start[1][1]);
               Serial.println(" ");
-              */
             }
-
             // Display the HTML web page
             client.println(web_compleat);
-            /*
-            client.println("<!DOCTYPE html><html>");
-            client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
-            client.println("<link rel=\"icon\" href=\"data:,\">");
-            client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; background-color: #1c2e75; text-align: center;color: #CACAC8; }");
-            client.println(".button { background-color: #4CAF50; border: none; color: white; padding: 16px 40px;");
-            client.println("body{ background-color: black;  color: white;}");
-            client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
-            client.println(".button2 {background-color: #555555;}</style></head>");
-            client.println("<body><h1>Hotel Credentials</h1>");
-            client.println("<h4>___________________ </h4>");
-            client.println("<span style=\"display:block; height: 40px;\"></span>");
-            client.println("<form action=\"/action_page.php\"> Wifi Name: <input type=\"text\" name=\"wifi_name\"><br>");
-            client.println("Password: <input type=\"text\" name=\"wifi_pass\"><br> <input type=\"Submit\"></form>");
-            client.println("<h4>___________________ </h4>");
-            client.println("<span style=\"display:block; height: 100px;\"></span>");
-            client.println("<h4> Hotel setup web page</h4>");
-            client.println("<h5> July - 2020</h5>");
-            client.println("</body></html>");
-            client.println();
-            */
             break;
           }
           else
@@ -207,8 +200,8 @@ bool obtein_credentials()
     header = "";
     // Close the connection
     client.stop();
-    Serial.println("Client disconnected");
-    Serial.println("");
+    // Serial.println("Client disconnected");
+    // Serial.println("");
   }
   return false;
 }
