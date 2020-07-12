@@ -11,9 +11,9 @@ typedef struct
   char wifi_name[40];
   char wifi_pass[40];
   char week_day[7];
-  char hours_start[4][2];
-
+  char hours_start[10];
 } AP_data_user;
+
 AP_data_user AP_data;
 
 char web_compleat[] = "<!DOCTYPE html>\
@@ -54,11 +54,11 @@ char web_compleat[] = "<!DOCTYPE html>\
         <input type=\"Submit\">\
         <h3>___________________ </h3>\
     </form>\
-        <span style=\"display:block; height: 100px; \"></span>\
         <h3> Hotel setup web page</h3>\
         <h5> August - 2020</h5>\
 </body>\
 </html>";
+// <span style=\"display:block; height: 100px; \"></span>
 void setup()
 {
   Serial.begin(115200);
@@ -109,76 +109,36 @@ bool obtein_credentials()
             if (header.indexOf("GET /action_page.php?wifi_name=") >= 0)
             {
               //GET /action_page.php?wifi_name=asd&wifi_pass=Fgh HTTP/1.1
-              uint8_t index_wifi_name = header.indexOf("&wifi_name=") + 11 + 21;
-              uint8_t index_wifi_pass = header.indexOf("&wifi_pass=") + 11;
-              uint8_t index_week_day = header.indexOf("&week=") + 6;
-              uint8_t index_hours_start = header.indexOf("&hours1=") + 8;
-              uint8_t index_hours_start2 = header.indexOf("&hours2=") + 8;
-              uint8_t index_hours_start3 = header.indexOf("&hours3=") + 8;
-              uint8_t index_hours_start4 = header.indexOf("&hours4=") + 8;
 
               Serial.println(" ");
               Serial.print("USER: ");
-              //First I get the user
-              for (uint8_t i = 0; i < 30; i++)
-              {
-                //I save the info in the struct
-                if (header.charAt(index_wifi_name + i) == '&')
-                  break;
-                else
-                  AP_data.wifi_name[i] = header.charAt(index_wifi_name + i);
-                if (AP_data.wifi_name[i] == '+')
-                  AP_data.wifi_name[i] = ' ';
-                Serial.write(AP_data.wifi_name[i]);
-              }
+              uint16_t index = header.indexOf("&wifi_name=") + 32;
+              get_url_info(AP_data.wifi_name, index);
               Serial.println(" ");
               Serial.print("PASS:");
-              for (uint8_t i = 0; i < 30; i++)
-              {
-                //I save the info in the struct
-                if (header.charAt(index_wifi_pass + i) == '&')
-                  break;
-                else
-                  AP_data.wifi_pass[i] = header.charAt(index_wifi_pass + i);
-                if (AP_data.wifi_pass[i] == '+')
-                  AP_data.wifi_pass[i] = ' ';
-                Serial.write(AP_data.wifi_pass[i]);
-              }
+              index = header.indexOf("&wifi_pass=") + 11;
+              get_url_info(AP_data.wifi_pass, index);
               Serial.println(" ");
               Serial.print("WEEK DAY: ");
-              for (uint8_t i = 0; i < 30; i++)
-              {
-                //I save the info in the struct
-                if (header.charAt(index_week_day + i) == '&')
-                  break;
-                else
-                  AP_data.week_day[i] = header.charAt(index_week_day + i);
-                if (AP_data.week_day[i] == '+')
-                  AP_data.week_day[i] = ' ';
-                Serial.write(AP_data.week_day[i]);
-              }
+              index = header.indexOf("&week=") + 6;
+              get_url_info(AP_data.week_day, index);
               Serial.println(" ");
+              //TODO: DO NOT REPEAT THIS CODE
               Serial.print("TIME 1: ");
-              AP_data.hours_start[0][0] = header.charAt(index_hours_start);
-              AP_data.hours_start[0][1] = header.charAt(index_hours_start + 1);
-              AP_data.hours_start[1][0] = header.charAt(index_hours_start + 5);
-              AP_data.hours_start[1][1] = header.charAt(index_hours_start + 6);
-              Serial.write(AP_data.hours_start[0][0]);
-              Serial.write(AP_data.hours_start[0][1]);
-              Serial.print(":");
-              Serial.write(AP_data.hours_start[1][0]);
-              Serial.write(AP_data.hours_start[1][1]);
+              index = header.indexOf("&hours1=") + 8;
+              get_time_url(AP_data.hours_start, index);
               Serial.println(" ");
               Serial.print("TIME 2: ");
-              AP_data.hours_start[0][0] = header.charAt(index_hours_start2);
-              AP_data.hours_start[0][1] = header.charAt(index_hours_start2 + 1);
-              AP_data.hours_start[1][0] = header.charAt(index_hours_start2 + 5);
-              AP_data.hours_start[1][1] = header.charAt(index_hours_start2 + 6);
-              Serial.write(AP_data.hours_start[0][0]);
-              Serial.write(AP_data.hours_start[0][1]);
-              Serial.print(":");
-              Serial.write(AP_data.hours_start[1][0]);
-              Serial.write(AP_data.hours_start[1][1]);
+              index = header.indexOf("&hours2=") + 8;
+              get_time_url(AP_data.hours_start, index);
+              Serial.println(" ");
+              Serial.print("TIME 3: ");
+              index = header.indexOf("&hours3=") + 8;
+              get_time_url(AP_data.hours_start, index);
+              Serial.println(" ");
+              Serial.print("TIME 4: ");
+              index = header.indexOf("&hours4=") + 8;
+              get_time_url(AP_data.hours_start, index);
               Serial.println(" ");
             }
             // Display the HTML web page
@@ -186,9 +146,7 @@ bool obtein_credentials()
             break;
           }
           else
-          {
             currentLine = "";
-          }
         }
         else if (c != '\r')
         {                   // if you got anything else but a carriage return character,
@@ -204,4 +162,30 @@ bool obtein_credentials()
     // Serial.println("");
   }
   return false;
+}
+void get_url_info(char *data, uint16_t index)
+{
+  for (uint8_t i = 0; i < 30; i++)
+  {
+    //I save the info in the struct
+    if (header.charAt(index + i) == '&')
+      break;
+    else
+      data[i] = header.charAt(index + i);
+    if (data[i] == '+')
+      data[i] = ' ';
+    Serial.write(data[i]);
+  }
+}
+void get_time_url(char *data, uint16_t index)
+{
+  data[0] = header.charAt(index);
+  data[1] = header.charAt(index + 1);
+  data[2] = header.charAt(index + 5);
+  data[3] = header.charAt(index + 6);
+  Serial.write(data[0]);
+  Serial.write(data[1]);
+  Serial.print(":");
+  Serial.write(data[2]);
+  Serial.write(data[3]);
 }
