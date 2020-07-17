@@ -2,7 +2,7 @@
 #!/usr/bin/python
 import paho.mqtt.client as mqtt
 # get the credentials of the devises
-from not_show import intro_json, UPDATE_TOPICS, HOST_MQTT
+from not_show import intro_json, UPDATE_TOPICS, MQTT_CREDENTIALS
 import sys
 import os
 import json
@@ -11,7 +11,7 @@ import hashlib
 import multiprocessing
 import time
 import base64
-
+import ssl
 """
 For converting to windows:
     pip install pyinstaller
@@ -34,9 +34,11 @@ else:
     update_file_name = str(sys.argv[3])
     # print(update_file_name)
     # Check if it makes sense the words introduce:
-    if ((business == 'infrico' or business == 'solidy')
-            and (devise == 'esp32' or devise == 'atmega')):
-        print("Comienza el proceso de update...")
+    if (business == 'infrico' or business == 'solidy'):
+            if (devise == 'esp32' or devise == 'atmega'):
+                print("Comienza el proceso de update...")
+            else:           
+                print("Invalid parameters!!")
     else:
         print("Invalid parameters!!")
         sys.exit()
@@ -80,8 +82,13 @@ def received_message(mqttc, obj, msg):
 # Configure the mqtt client:
 mqttc = mqtt.Client()
 mqttc.on_message = received_message
-# I connect to broker:
-mqttc.connect(HOST_MQTT, 1883, 60)
+# I connect to broker and set all the permisions:
+mqttc.tls_set('C:/Users/Asus/Desktop/ESP_32_noob/MQTT_auto_replay/ca.crt', tls_version=ssl.PROTOCOL_TLSv1_2)
+mqttc.tls_insecure_set(True)
+mqttc.username_pw_set(MQTT_CREDENTIALS['USER'],MQTT_CREDENTIALS['PASS'])
+mqttc.connect(MQTT_CREDENTIALS['HOST'], 8883, 60)
+mqttc.publish('Start', '{"Start_ALL":1}', 0, False)
+
 # I generate the first update json:
 mqttc.subscribe(UPDATE_TOPICS['esp32_intro'].replace('x', business), 0)
 mqttc.loop_forever()
