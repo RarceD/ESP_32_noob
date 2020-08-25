@@ -1,0 +1,12 @@
+not_show.py
+tips.txt
+update.bin
+/build
+/dist
+/__pycache__
+/WinMD5
+/hex2bin.rar
+/zlib.rar
+/Debug
+/PCBs
+ca.crt
