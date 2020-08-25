@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="TestReaderLib">
+</Property><Property Name="解决方案文件" Value="H:\SysWork\QM\windows\Source Code_V2.1\TestReaderLib.sln">
+</Property><Property Name="用户选项文件" Value="H:\SysWork\QM\windows\Source Code_V2.1\TestReaderLib.suo">
+</Property><Property Name="Date" Value="2017年3月31日">
+</Property><Property Name="Time" Value="15:03">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="TestReaderLib.sln" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\TestReaderLib.sln">
+</Event><Event ErrorLevel="0" Project="" Source="TestReaderLib.suo" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\TestReaderLib.suo">
+</Event><Event ErrorLevel="0" Project="TestReaderLib" Source="TestReaderLib\TestReaderLib.csproj" Description="项目文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\TestReaderLib\TestReaderLib.csproj">
+</Event><Event ErrorLevel="0" Project="TestReaderLib" Source="TestReaderLib\Form1.cs" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\TestReaderLib\Form1.cs">
+</Event><Event ErrorLevel="0" Project="TestReaderLib" Source="TestReaderLib\Form1.designer.cs" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\TestReaderLib\Form1.designer.cs">
+</Event><Event ErrorLevel="0" Project="TestReaderLib" Source="TestReaderLib\Program.cs" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\TestReaderLib\Program.cs">
+</Event><Event ErrorLevel="0" Project="TestReaderLib" Source="TestReaderLib\Properties\Resources.Designer.cs" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\TestReaderLib\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="TestReaderLib" Source="TestReaderLib\WindowsMsg.cs" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\TestReaderLib\WindowsMsg.cs">
+</Event><Event ErrorLevel="0" Project="TestReaderLib" Source="TestReaderLib\Form1.resx" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\TestReaderLib\Form1.resx">
+</Event><Event ErrorLevel="0" Project="TestReaderLib" Source="TestReaderLib\Properties\Resources.resx" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\TestReaderLib\Properties\Resources.resx">
+</Event><Event ErrorLevel="0" Project="TestReaderLib" Source="TestReaderLib\TestReaderLib.csproj" Description="项目文件不需要转换。">
+</Event><Event ErrorLevel="3" Project="TestReaderLib" Source="TestReaderLib\TestReaderLib.csproj" Description="无需转换">
+</Event><Event ErrorLevel="0" Project="BarChart" Source="BarChart\BarChart.csproj" Description="项目文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\BarChart\BarChart.csproj">
+</Event><Event ErrorLevel="0" Project="BarChart" Source="BarChart\HBarChart.cs" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\BarChart\HBarChart.cs">
+</Event><Event ErrorLevel="0" Project="BarChart" Source="BarChart\HBarChart.Designer.cs" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\BarChart\HBarChart.Designer.cs">
+</Event><Event ErrorLevel="0" Project="BarChart" Source="BarChart\Properties\AssemblyInfo.cs" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\BarChart\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="BarChart" Source="BarChart\HBarChart.resx" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\BarChart\HBarChart.resx">
+</Event><Event ErrorLevel="0" Project="BarChart" Source="BarChart\BarChart.bmp" Description="文件已成功备份为 H:\SysWork\QM\windows\Source Code_V2.1\Backup\BarChart\BarChart.bmp">
+</Event><Event ErrorLevel="0" Project="BarChart" Source="BarChart\BarChart.csproj" Description="项目文件不需要转换。">
+</Event><Event ErrorLevel="3" Project="BarChart" Source="BarChart\BarChart.csproj" Description="无需转换">
+</Event><Event ErrorLevel="0" Project="" Source="TestReaderLib.sln" Description="成功转换解决方案">
+</Event><Event ErrorLevel="3" Project="" Source="TestReaderLib.sln" Description="Converted">
+</Event></UpgradeLog>

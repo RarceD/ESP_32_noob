@@ -1,0 +1,41 @@
+---- dgvEpcBasic Matches (41 in 2 files) ----
+Form1.cs (netreader):            this.dgvEpcBasic.DataSource = BasicDataViewEpc;
+Form1.cs (netreader):            Basic_DGV_ColumnsWidth(this.dgvEpcBasic);
+Form1.cs (netreader):            this.dgvEpcBasic.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgvEpcBasic_DataBindingComplete);
+Form1.cs (netreader):        private void dgvEpcBasic_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+Form1.cs (netreader):            this.dgvEpcBasic.ClearSelection();
+Form1.cs (netreader):                //for (int i = 0; i < this.dgvEpcBasic.Rows.Count; i++)
+Form1.cs (netreader):                //    string cnt = this.dgvEpcBasic.Rows[i].Cells[5].Value.ToString();
+Form1.cs (netreader):                //for (int i = 0; i < this.dgvEpcBasic.Rows.Count; i++)
+Form1.cs (netreader):                //    string cnt = this.dgvEpcBasic.Rows[i].Cells[5].Value.ToString();
+Form1.cs (netreader):                //        this.dgvEpcBasic.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(0xff,255 - r,255 - r);
+Form1.cs (netreader):            for (int i = 0; i < this.dgvEpcBasic.Rows.Count; i++)
+Form1.cs (netreader):                string time = this.dgvEpcBasic.Rows[i].Cells[7].Value.ToString();
+Form1.cs (netreader):                            this.dgvEpcBasic.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+Form1.cs (netreader):                        //    this.dgvEpcBasic.Rows[i].DefaultCellStyle.BackColor = Color.Pink;
+Form1.cs (netreader):                            //this.dgvEpcBasic.Rows[i].DefaultCellStyle.BackColor = Color.White;
+Form1.cs (netreader):                            this.dgvEpcBasic.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(0xff, 255 - r, 255 - r);
+Form1.Designer.cs (netreader):            this.dgvEpcBasic = new System.Windows.Forms.DataGridView();
+Form1.Designer.cs (netreader):            ((System.ComponentModel.ISupportInitialize)(this.dgvEpcBasic)).BeginInit();
+Form1.Designer.cs (netreader):            this.gbxEpcTableBasic.Controls.Add(this.dgvEpcBasic);
+Form1.Designer.cs (netreader):            // dgvEpcBasic
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.AllowUserToAddRows = false;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.AllowUserToDeleteRows = false;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.AllowUserToResizeColumns = false;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.AllowUserToResizeRows = false;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.BackgroundColor = System.Drawing.SystemColors.Control;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.BorderStyle = System.Windows.Forms.BorderStyle.None;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.ContextMenuStrip = this.contextMenuStrip1;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.Location = new System.Drawing.Point(6, 43);
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.Name = "dgvEpcBasic";
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.ReadOnly = true;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.RowHeadersVisible = false;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.RowTemplate.Height = 18;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.Size = new System.Drawing.Size(737, 315);
+Form1.Designer.cs (netreader):            this.dgvEpcBasic.TabIndex = 19;
+Form1.Designer.cs (netreader):            ((System.ComponentModel.ISupportInitialize)(this.dgvEpcBasic)).EndInit();
+Form1.Designer.cs (netreader):        private System.Windows.Forms.DataGridView dgvEpcBasic;

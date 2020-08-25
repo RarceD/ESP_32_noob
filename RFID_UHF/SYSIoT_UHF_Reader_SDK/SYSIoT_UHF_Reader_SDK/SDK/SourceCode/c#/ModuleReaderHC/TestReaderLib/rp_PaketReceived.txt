@@ -1,0 +1,580 @@
+
+        private void rp_PaketReceived(object sender, StrArrEventArgs e)
+        {
+            string[] packetRx = e.Data;
+            string strPacket = string.Empty;
+            for (int i = 0; i < packetRx.Length; i++)
+            {
+                strPacket += packetRx[i] + " ";
+            }
+            this.Invoke((EventHandler)(delegate
+            {
+                txtCOMRxCnt.Text = (Convert.ToInt32(txtCOMRxCnt.Text) + packetRx.Length).ToString();
+                txtCOMRxCnt_adv.Text = txtCOMRxCnt.Text;
+
+                //auto clear received data region
+                int txtReceive_len = txtReceive.Lines.Length; //txtReceive.GetLineFromCharIndex(txtReceive.Text.Length + 1);
+                if (cbxAutoClear.Checked)
+                {
+                    if (txtReceive_len > 9)
+                    {
+                        txtReceive.Text = string.Empty;
+                    }
+                }
+                #region show received packet
+                if (cbxRxVisable.Checked == true)
+                {
+                    this.txtReceive.Text = this.txtReceive.Text + strPacket + "\r\n";
+                }
+                if (packetRx[1] == ConstCode.FRAME_TYPE_INFO && packetRx[2] == ConstCode.CMD_INVENTORY)         //Succeed to Read EPC
+                {
+                    //Console.Beep();
+                    SucessEPCNum = SucessEPCNum + 1;
+                    db_errEPCNum = FailEPCNum;
+                    db_LoopNum_cnt = db_LoopNum_cnt + 1;
+                    errnum = (db_errEPCNum / db_LoopNum_cnt) * 100;
+                    per = string.Format("{0:0.000}", errnum);
+
+                    int rssidBm = Convert.ToInt16(packetRx[5], 16); // rssidBm is negative && in bytes
+                    if (rssidBm > 127)
+                    {
+                        rssidBm = -((-rssidBm)&0xFF);
+                    }
+                    rssidBm -= Convert.ToInt32(tbxCoupling.Text, 10);
+                    rssidBm -= Convert.ToInt32(tbxAntennaGain.Text, 10);
+                    rssi = rssidBm.ToString();
+
+                    int PCEPCLength = ((Convert.ToInt32((packetRx[6]), 16)) / 8 + 1) * 2;
+                    pc = packetRx[6] + " " + packetRx[7];
+                    epc = string.Empty;
+                    for (int i = 0; i < PCEPCLength - 2; i++)
+                    {
+                        epc = epc + packetRx[8 + i];
+                    }
+                    epc = Commands.AutoAddSpace(epc);
+                    crc = packetRx[6 + PCEPCLength] + " " + packetRx[7 + PCEPCLength];
+                    GetEPC(pc, epc, crc, rssi, per);
+                }
+                else if (packetRx[1] == ConstCode.FRAME_TYPE_ANS)
+                {
+                    setStatus("", Color.MediumSeaGreen);
+                    if (packetRx[2] == ConstCode.CMD_EXE_FAILED)
+                    {
+                        int failType = Convert.ToInt32(packetRx[5], 16);
+                        if (packetRx.Length > 9) // has PC+EPC field
+                        {
+                            txtOperateEpc.Text = "";
+                            int pcEpcLen = Convert.ToInt32(packetRx[6], 16);
+
+                            for (int i = 0; i < pcEpcLen; i++)
+                            {
+                                txtOperateEpc.Text += packetRx[i + 7] + " ";
+                            }
+                        }
+                        else
+                        {
+                            txtOperateEpc.Text = "";
+                        }
+                        if (packetRx[5] == ConstCode.FAIL_INVENTORY_TAG_TIMEOUT)
+                        {
+                            FailEPCNum = FailEPCNum + 1;
+                            db_errEPCNum = FailEPCNum;
+                            db_LoopNum_cnt = db_LoopNum_cnt + 1;
+                            errnum = (db_errEPCNum / db_LoopNum_cnt) * 100;
+                            per = string.Format("{0:0.000}", errnum);
+                            //GetEPC(pc, epc, crc, rssi_i, rssi_q, per);
+                            pbx_Inv_Indicator.Visible = false;
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_FHSS_FAIL)
+                        {
+                            //MessageBox.Show("FHSS Failed.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("FHSS Failed", Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_ACCESS_PWD_ERROR)
+                        {
+                            //MessageBox.Show("Access Failed, Please Check the Access Password!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("Access Failed, Please Check the Access Password", Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_READ_MEMORY_NO_TAG)
+                        {
+                            setStatus("No Tag Response, Fail to Read Tag Memory", Color.Red);
+                        }
+                        else if (packetRx[5].Substring(0,1) == ConstCode.FAIL_READ_ERROR_CODE_BASE.Substring(0,1))
+                        {
+                            //MessageBox.Show("Read Failed. Error Code: " + ParseErrCode(failType), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("Read Failed. Error Code: " + ParseErrCode(failType), Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_WRITE_MEMORY_NO_TAG)
+                        {
+                            //MessageBox.Show("No Tag Response, Fail to Write Tag Memory", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("No Tag Response, Fail to Write Tag Memory", Color.Red);
+                        }
+                        else if (packetRx[5].Substring(0, 1) == ConstCode.FAIL_WRITE_ERROR_CODE_BASE.Substring(0, 1))
+                        {
+                            //MessageBox.Show("Write Failed. Error Code: " + ParseErrCode(failType), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("Write Failed. Error Code: " + ParseErrCode(failType), Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_LOCK_NO_TAG)
+                        {
+                            //MessageBox.Show("No Tag Response, Lock Operation Failed", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("No Tag Response, Lock Operation Failed", Color.Red);
+                        }
+                        else if (packetRx[5].Substring(0, 1) == ConstCode.FAIL_LOCK_ERROR_CODE_BASE.Substring(0, 1))
+                        {
+                            //MessageBox.Show("Lock Failed. Error Code: " + ParseErrCode(failType), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("Lock Failed. Error Code: " + ParseErrCode(failType), Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_KILL_NO_TAG)
+                        {
+                            //MessageBox.Show("No Tag Response, Kill Operation Failed", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("No Tag Response, Kill Operation Failed", Color.Red);
+                        }
+                        else if (packetRx[5].Substring(0, 1) == ConstCode.FAIL_KILL_ERROR_CODE_BASE.Substring(0, 1))
+                        {
+                            //MessageBox.Show("Kill Failed. Error Code: " + ParseErrCode(failType), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("Kill Failed. Error Code: " + ParseErrCode(failType), Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_NXP_CHANGE_CONFIG_NO_TAG)
+                        {
+                            //MessageBox.Show("No Tag Response, NXP Change Config Failed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("No Tag Response, NXP Change Config Failed", Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_NXP_CHANGE_EAS_NO_TAG)
+                        {
+                            //MessageBox.Show("No Tag Response, NXP Change EAS Failed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("No Tag Response, NXP Change EAS Failed", Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_NXP_CHANGE_EAS_NOT_SECURE)
+                        {
+                            //MessageBox.Show("Tag is not in Secure State, NXP Change EAS Failed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("Tag is not in Secure State, NXP Change EAS Failed", Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_NXP_EAS_ALARM_NO_TAG)
+                        {
+                            //MessageBox.Show("No Tag Response, NXP EAS Alarm Operation Failed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            txtOperateEpc.Text = "";
+                            setStatus("No Tag Response, NXP EAS Alarm Operation Failed", Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_NXP_READPROTECT_NO_TAG)
+                        {
+                            //MessageBox.Show("No Tag Response, NXP ReadProtect Failed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("No Tag Response, NXP ReadProtect Failed", Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_NXP_RESET_READPROTECT_NO_TAG)
+                        {
+                            //MessageBox.Show("No Tag Response, NXP Reset ReadProtect Failed!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("No Tag Response, NXP Reset ReadProtect Failed", Color.Red);
+                        }
+                        else if (packetRx[5] == "2E") // QT Read/Write Failed
+                        {
+                            setStatus("No Tag Response, QT Command Failed", Color.Red);
+                        }
+                        else if (packetRx[5].Substring(0, 1) == ConstCode.FAIL_CUSTOM_CMD_BASE.Substring(0, 1))
+                        {
+                            //MessageBox.Show("Command Executed Failed. Error Code: " + ParseErrCode(failType), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            setStatus("Command Executed Failed. Error Code: " + ParseErrCode(failType), Color.Red);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_INVALID_PARA)
+                        {
+                            MessageBox.Show("Invalid Parameters", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                        else if (packetRx[5] == ConstCode.FAIL_INVALID_CMD)
+                        {
+                            MessageBox.Show("Invalid Command!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_SET_QUERY)            //SetQuery
+                    {
+                        MessageBox.Show("Query Parameters has set up", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_GET_QUERY)            //GetQuery
+                    {
+                        string infoGetQuery = string.Empty;
+                        string[] strMSB = String16toString2(packetRx[5]);
+                        string[] strLSB = String16toString2(packetRx[6]);
+                        int intQ = Convert.ToInt32(strLSB[6]) * 8 + Convert.ToInt32(strLSB[5]) * 4
+                            + Convert.ToInt32(strLSB[4]) * 2 + Convert.ToInt32(strLSB[3]);
+                        string strM = string.Empty;
+                        if ((strMSB[6] + strMSB[5]) == "00")
+                        {
+                            strM = "1";
+                        }
+                        else if ((strMSB[6] + strMSB[5]) == "01")
+                        {
+                            strM = "2";
+                        }
+                        else if ((strMSB[6] + strMSB[5]) == "10")
+                        {
+                            strM = "4";
+                        }
+                        else if ((strMSB[6] + strMSB[5]) == "11")
+                        {
+                            strM = "8";
+                        }
+                        string strTRext = string.Empty;
+                        if (strMSB[4] == "0")
+                        {
+                            strTRext = "NoPilot";
+                        }
+                        else
+                        {
+                            strTRext = "UsePilot";
+                        }
+                        string strTarget = string.Empty;
+                        if (strLSB[7] == "0")
+                        {
+                            strTarget = "A";
+                        }
+                        else
+                        {
+                            strTarget = "B";
+                        }
+                        infoGetQuery = "DR=" + strMSB[7] + ", ";
+                        infoGetQuery = infoGetQuery + "M=" + strM + ", ";
+                        infoGetQuery = infoGetQuery + "TRext=" + strTRext + ", ";
+                        infoGetQuery = infoGetQuery + "Sel=" + strMSB[3] + strMSB[2] + ", ";
+                        infoGetQuery = infoGetQuery + "Session=" + strMSB[1] + strMSB[0] + ", ";
+                        infoGetQuery = infoGetQuery + "Target=" + strTarget + ", ";
+                        infoGetQuery = infoGetQuery + "Q=" + intQ;
+                        MessageBox.Show(infoGetQuery, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_READ_DATA)         //Read Tag Memory
+                    {
+                        string strInvtReadData = "";
+                        txtInvtRWData.Text = "";
+                        txtOperateEpc.Text = "";
+                        int dataLen = Convert.ToInt32(packetRx[3], 16) * 256 + Convert.ToInt32(packetRx[4], 16);
+                        int pcEpcLen = Convert.ToInt32(packetRx[5], 16);
+
+                        for (int i = 0; i < pcEpcLen; i++)
+                        {
+                            txtOperateEpc.Text += packetRx[i + 6] + " ";
+                        }
+
+                        for (int i = 0; i < dataLen - pcEpcLen - 1; i++)
+                        {
+                            strInvtReadData = strInvtReadData + packetRx[i + pcEpcLen + 6];
+                        }
+                        txtInvtRWData.Text = Commands.AutoAddSpace(strInvtReadData);
+                        setStatus("Read Memory Success", Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_RFM_TAG)         //Read RFM Tag Memory
+                    {
+                        setStatus("Read RFM Memory Success", Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_WRITE_DATA)
+                    {
+                        //MessageBox.Show("Write Memory Success!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        getSuccessTagEpc(packetRx);
+                        setStatus("Write Memory Success", Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_LOCK_UNLOCK)
+                    {
+                        //MessageBox.Show("Lock Success!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        getSuccessTagEpc(packetRx);
+                        setStatus("Lock Success", Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_KILL)
+                    {
+                        //MessageBox.Show("Kill Success!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        getSuccessTagEpc(packetRx);
+                        setStatus("Kill Success", Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_NXP_CHANGE_CONFIG)
+                    {
+                        int pcEpcLen = getSuccessTagEpc(packetRx);
+                        string configWord = packetRx[pcEpcLen + 6] + packetRx[pcEpcLen + 7];
+                        setStatus("NXP Tag Change Config Success, Config Word: 0x" + configWord, Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_NXP_CHANGE_EAS)
+                    {
+                        getSuccessTagEpc(packetRx);
+                        setStatus("NXP Tag Change EAS Success", Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_NXP_READPROTECT)
+                    {
+                        getSuccessTagEpc(packetRx);
+                        setStatus("NXP Tag ReadProtect Success", Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_NXP_RESET_READPROTECT)
+                    {
+                        getSuccessTagEpc(packetRx);
+                        setStatus("NXP Tag Reset ReadProtect Success", Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_NXP_EAS_ALARM)
+                    {
+                        setStatus("NXP Tag EAS Alarm Success", Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_IPJ_MONZA_QT_READ) // Monza tag QT Read command response
+                    {
+                        int pcEpcLen = getSuccessTagEpc(packetRx);
+                        string QTcontrol = packetRx[pcEpcLen + 6] + packetRx[pcEpcLen + 7];
+                        int controlWord = Convert.ToUInt16(QTcontrol, 16);
+                        string QT_SR = ((controlWord & 0x8000) == 0) ? "0" : "1";
+                        string QT_MEM = ((controlWord & 0x4000) == 0) ? "0" : "1";
+                        setStatus("QT Read Success, QT Control Word: 0x" + QTcontrol + ", QT_SR=" + QT_SR + ", QT_MEM=" + QT_MEM, Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_IPJ_MONZA_QT_WRITE) // Monza tag QT Write command response
+                    {
+                        getSuccessTagEpc(packetRx);
+                        setStatus("QT Write Success", Color.MediumSeaGreen);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_GET_SELECT_PARA)            //GetQuery
+                    {
+                        string infoGetSelParam = string.Empty;
+                        string[] strSelCombParam = String16toString2(packetRx[5]);
+                        string strSelTarget = strSelCombParam[7] + strSelCombParam[6] + strSelCombParam[5];
+                        string strSelAction = strSelCombParam[4] + strSelCombParam[3] + strSelCombParam[2];
+                        string strSelMemBank = strSelCombParam[1] + strSelCombParam[0];
+
+                        string strSelTargetInfo = null;
+                        if (strSelTarget == "000")
+                        {
+                            strSelTargetInfo = "S0";
+                        }
+                        else if (strSelTarget == "001")
+                        {
+                            strSelTargetInfo = "S1";
+                        }
+                        else if (strSelTarget == "010")
+                        {
+                            strSelTargetInfo = "S2";
+                        }
+                        else if (strSelTarget == "011")
+                        {
+                            strSelTargetInfo = "S3";
+                        }
+                        else if (strSelTarget == "100")
+                        {
+                            strSelTargetInfo = "SL";
+                        }
+                        else
+                        {
+                            strSelTargetInfo = "RFU";
+                        }
+
+                        string strSelMemBankInfo = null;
+                        if (strSelMemBank == "00")
+                        {
+                            strSelMemBankInfo = "RFU";
+                        }
+                        else if (strSelMemBank == "01")
+                        {
+                            strSelMemBankInfo = "EPC";
+                        }
+                        else if (strSelMemBank == "10")
+                        {
+                            strSelMemBankInfo = "TID";
+                        }
+                        else
+                        {
+                            strSelMemBankInfo = "User";
+                        }
+                        infoGetSelParam = "Target=" + strSelTargetInfo + ", Action=" + strSelAction + ", Memory Bank=" + strSelMemBankInfo;
+                        infoGetSelParam = infoGetSelParam + ", Pointer=0x" + packetRx[6] + packetRx[7] + packetRx[8] + packetRx[9];
+                        infoGetSelParam = infoGetSelParam + ", Length=0x" + packetRx[10];
+                        string strTruncate = null;
+                        if (packetRx[11] == "00")
+                        {
+                            strTruncate = "Disable Truncation";
+                        }
+                        else
+                        {
+                            strTruncate = "Enable Truncation";
+                        }
+                        infoGetSelParam = infoGetSelParam + ", " + strTruncate;
+
+                        this.txtGetSelLength.Text = packetRx[10];
+
+                        string strGetSelMask = null;
+                        int intGetSelMaskByte = Convert.ToInt32(packetRx[10], 16) / 8;
+                        int intGetSelMaskBit = Convert.ToInt32(packetRx[10], 16) - intGetSelMaskByte * 8;
+                        if (intGetSelMaskBit == 0)
+                        {
+                            for (int i = 0; i < intGetSelMaskByte; i++)
+                            {
+                                strGetSelMask = strGetSelMask + packetRx[12 + i];
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < intGetSelMaskByte + 1; i++)
+                            {
+                                strGetSelMask = strGetSelMask + packetRx[12 + i];
+                            }
+                        }
+
+                        this.txtGetSelMask.Text = Commands.AutoAddSpace(strGetSelMask);
+                        MessageBox.Show(infoGetSelParam, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_GET_RF_CHANNEL)
+                    {
+                        double curRfCh = Convert.ToInt32(packetRx[5], 16);
+                        switch (curRegion)
+                        {
+                            case ConstCode.REGION_CODE_CHN2: // China 2
+                                curRfCh = 920.125 + curRfCh * 0.25;
+                                break;
+                            case ConstCode.REGION_CODE_CHN1: // China 1
+                                curRfCh = 840.125 + curRfCh * 0.25;
+                                break;
+                            case ConstCode.REGION_CODE_US: // US
+                                curRfCh = 902.25 + curRfCh * 0.5;
+                                break;
+                            case ConstCode.REGION_CODE_EUR: // Europe
+                                curRfCh = 865.1 + curRfCh * 0.2;
+                                break;
+                            case ConstCode.REGION_CODE_KOREA:  // Korea
+                                curRfCh = 917.1 + curRfCh * 0.2;
+                                break;
+                            default:
+                                break;
+                        }
+                        MessageBox.Show("Current RF Channel is " + curRfCh + " MHz", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_GET_POWER)
+                    {
+                        string curPower = packetRx[5] + packetRx[6];
+                        MessageBox.Show("Current Power is " + (Convert.ToInt16(curPower, 16) / 100.0) + "dBm", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_READ_MODEM_PARA)
+                    {
+                        int mixerGain = mixerGainTable[Convert.ToInt32(packetRx[5], 16)];
+                        int IFAmpGain = IFAmpGainTable[Convert.ToInt32(packetRx[6], 16)];
+                        string signalTh = packetRx[7] + packetRx[8];
+                        MessageBox.Show("Mixer Gain is " + mixerGain + "dB, IF AMP Gain is " + IFAmpGain + "dB, Decode Threshold is 0x" + signalTh + ".", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_SCAN_JAMMER)
+                    {
+                        int startChannel = Convert.ToInt16(packetRx[5], 16);
+                        int stopChannel = Convert.ToInt16(packetRx[6], 16);
+
+                        hBarChartJammer.Items.Maximum = 40;
+                        hBarChartJammer.Items.Minimum = 0;
+
+                        hBarChartJammer.Items.Clear();
+
+                        int[] allJammer = new int[(stopChannel - startChannel + 1)];
+                        int maxJammer = -100;
+                        int minJammer = 20;
+                        for (int i = 0; i < (stopChannel - startChannel + 1); i++)
+                        {
+                            int jammer = Convert.ToInt16(packetRx[7 + i], 16);
+                            if (jammer > 127)
+                            {
+                                jammer = -((-jammer) & 0xFF);
+                            }
+                            allJammer[i] = jammer;
+                            if (jammer >= maxJammer)
+                            {
+                                maxJammer = jammer;
+                            }
+                            if (jammer <= minJammer)
+                            {
+                                minJammer = jammer;
+                            }
+                        }
+                        int offset = -minJammer + 3;
+                        for (int i = 0; i < (stopChannel - startChannel + 1); i++)
+                        {
+                            allJammer[i] = allJammer[i] + offset;
+                            hBarChartJammer.Items.Add(new HBarItem((double)(allJammer[i]), (double)offset, (i + startChannel).ToString(), Color.FromArgb(255, 190, 200, 255)));
+                        }
+                        hBarChartJammer.RedrawChart();
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_SCAN_RSSI)
+                    {
+                        int startChannel = Convert.ToInt16(packetRx[5], 16);
+                        int stopChannel = Convert.ToInt16(packetRx[6], 16);
+
+                        hBarChartRssi.Items.Maximum = 73;
+                        hBarChartRssi.Items.Minimum = 0;
+
+                        hBarChartRssi.Items.Clear();
+
+                        int[] allRssi = new int[(stopChannel - startChannel + 1)];
+                        int maxRssi = -100;
+                        int minRssi = 20;
+                        for (int i = 0; i < (stopChannel - startChannel + 1); i++)
+                        {
+                            int rssi = Convert.ToInt16(packetRx[7 + i], 16);
+                            if (rssi > 127)
+                            {
+                                rssi = -((-rssi) & 0xFF);
+                            }
+                            allRssi[i] = rssi;
+                            if (rssi >= maxRssi)
+                            {
+                                maxRssi = rssi;
+                            }
+                            if (rssi <= minRssi)
+                            {
+                                minRssi = rssi;
+                            }
+                        }
+                        int offset = -minRssi + 3;
+                        for (int i = 0; i < (stopChannel - startChannel + 1); i++)
+                        {
+                            allRssi[i] = allRssi[i] + offset;
+                            hBarChartRssi.Items.Add(new HBarItem((double)(allRssi[i]), (double)offset, (i + startChannel).ToString(), Color.FromArgb(255, 190, 200, 255)));
+                        }
+                        hBarChartRssi.RedrawChart();
+                    }
+                    else if (packetRx[2] == ConstCode.CMD_GET_MODULE_INFO)
+                    {
+                        if (checkingReaderAvailable)
+                        {
+                            if (packetRx[5] == ConstCode.MODULE_HARDWARE_VERSION_FIELD)
+                            {
+                                hardwareVersion = String.Empty;
+                                try
+                                {
+                                    for (int i = 0; i < Convert.ToInt32(packetRx[4], 16) - 1; i++)
+                                    {
+                                        hardwareVersion += (char)Convert.ToInt32(packetRx[6 + i], 16);
+                                    }
+                                    txtHardwareVersion.Text = hardwareVersion;
+                                    adjustUIcomponents(hardwareVersion);
+                                    getFirmwareVersion();
+                                }
+                                catch (System.Exception ex)
+                                {
+                                    hardwareVersion = packetRx[6].Substring(1, 1) + "." + packetRx[7];
+                                    txtHardwareVersion.Text = hardwareVersion;
+                                    Console.WriteLine(ex.Message);
+                                }
+                            }
+                            else if (packetRx[5] == ConstCode.MODULE_SOFTWARE_VERSION_FIELD)
+                            {
+                                String firmwareVersion = string.Empty;
+                                try
+                                {
+                                    for (int i = 0; i < Convert.ToInt32(packetRx[4], 16) - 1; i++)
+                                    {
+                                        firmwareVersion += (char)Convert.ToInt32(packetRx[6 + i], 16);
+                                    }
+                                    txtFirmwareVersion.Text = firmwareVersion;
+                                }
+                                catch (System.Exception ex)
+                                {
+                                    txtFirmwareVersion.Text = "";
+                                    Console.WriteLine(ex.Message);
+                                }
+                            }
+                        }
+                    }
+                    else if (packetRx[2] == "1A")
+                    {
+                        if (packetRx[5] == "02")
+                        {
+                            MessageBox.Show("IO" + packetRx[6].Substring(1) + " is " + (packetRx[7] == "00" ? "Low" : "High"), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+#endregion
+            }));
+
+#if TRACE
+            //Console.WriteLine("a packet received!");
+#endif
+        }

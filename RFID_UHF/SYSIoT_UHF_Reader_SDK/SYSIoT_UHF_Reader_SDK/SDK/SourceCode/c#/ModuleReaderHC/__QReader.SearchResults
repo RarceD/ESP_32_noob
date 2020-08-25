@@ -1,0 +1,12 @@
+---- SensorTag_MessageProcessFailed Matches (2 in 1 files) ----
+Form1.cs (testreaderlib):					SensorTag_MessageProcessFailed(rxStrPkts);
+Form1.cs (testreaderlib):		private void SensorTag_MessageProcessFailed(Commands.ReaderResponseFrameString rxStrPkts)
+---- SensorTagMsg.Epc Matches (7 in 1 files) ----
+Form1.cs (testreaderlib):			SensorTagMsg.Epc= string.Empty;
+Form1.cs (testreaderlib):				SensorTagMsg.Epc = SensorTagMsg.Epc + rxStrPkts.strParameters[3 + i];
+Form1.cs (testreaderlib):			SensorTagMsg.Epc = Commands.AutoAddSpace(SensorTagMsg.Epc);
+Form1.cs (testreaderlib):			strShowMessage = "Sensor Tag: " + SensorTagMsg.Epc + " [ " + SensorTagMsg.Temperture + "°C ]-{" + SensorTagMsg.SensorRssi + "}";
+Form1.cs (testreaderlib):			strShowMessage = "Sensor Tag: " + SensorTagMsg.Epc + "- No Sensor Tag Found!" + SensorTag_ReadTemprCounter.ToString();
+---- rp_PaketReceived Matches (2 in 1 files) ----
+Form1.cs (testreaderlib):            rp.PacketReceived +=new EventHandler<StrArrEventArgs>(rp_PaketReceived);
+Form1.cs (testreaderlib):	private void rp_PaketReceived(object sender, StrArrEventArgs e)

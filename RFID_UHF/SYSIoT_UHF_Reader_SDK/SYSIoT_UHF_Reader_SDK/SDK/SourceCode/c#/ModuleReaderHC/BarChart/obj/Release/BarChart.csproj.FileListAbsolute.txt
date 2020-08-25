@@ -1,0 +1,119 @@
+H:\SysWork\QM\windows\Source Code_V2.1\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\windows\Source Code_V2.1\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\windows\Source Code_V2.1\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\windows\Source Code_V2.1\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\windows\Source Code_V2.1\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\windows\Source Code_V2.1\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\windows\Source Code_V2.2\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\windows\Source Code_V2.2\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\windows\Source Code_V2.2\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\windows\Source Code_V2.2\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\windows\Source Code_V2.2\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\windows\Source Code_V2.2\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\windows\Source Code_V2.3 RFM\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\windows\Source Code_V2.3 RFM\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\windows\Source Code_V2.3 RFM\BarChart\obj\Release\BarChart.csprojResolveAssemblyReference.cache
+H:\SysWork\QM\windows\Source Code_V2.3 RFM\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\windows\Source Code_V2.3 RFM\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\windows\Source Code_V2.3 RFM\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\windows\Source Code_V2.3 RFM\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectC\Source Code_V2.9\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectC\Source Code_V2.9\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectC\Source Code_V2.9\BarChart\obj\Release\BarChart.csprojResolveAssemblyReference.cache
+H:\SysWork\QM\MCUALL\Mu902ProjectC\Source Code_V2.9\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu902ProjectC\Source Code_V2.9\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu902ProjectC\Source Code_V2.9\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectC\Source Code_V2.9\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\Source Code_V2.9\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\Source Code_V2.9\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\Source Code_V2.9\BarChart\obj\Release\BarChart.csprojResolveAssemblyReference.cache
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\Source Code_V2.9\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\Source Code_V2.9\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\Source Code_V2.9\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\Source Code_V2.9\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\ModuleReader\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\ModuleReader\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\ModuleReader\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\ModuleReader\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\ModuleReader\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectE\Windows\ModuleReader\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectF\Windows\ModuleReader\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectF\Windows\ModuleReader\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectF\Windows\ModuleReader\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu902ProjectF\Windows\ModuleReader\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu902ProjectF\Windows\ModuleReader\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectF\Windows\ModuleReader\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectG\Windows\ModuleReader\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectG\Windows\ModuleReader\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectG\Windows\ModuleReader\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu902ProjectG\Windows\ModuleReader\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu902ProjectG\Windows\ModuleReader\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectG\Windows\ModuleReader\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectH\Windows\ModuleReader\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectH\Windows\ModuleReader\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectH\Windows\ModuleReader\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu902ProjectH\Windows\ModuleReader\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu902ProjectH\Windows\ModuleReader\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectH\Windows\ModuleReader\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectJ\Windows\ModuleReaderA\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectJ\Windows\ModuleReaderA\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu902ProjectJ\Windows\ModuleReaderA\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu902ProjectJ\Windows\ModuleReaderA\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu902ProjectJ\Windows\ModuleReaderA\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu902ProjectJ\Windows\ModuleReaderA\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectK\Windows\ModuleReaderA\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectK\Windows\ModuleReaderA\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectK\Windows\ModuleReaderA\BarChart\obj\Release\BarChart.csprojResolveAssemblyReference.cache
+H:\SysWork\QM\MCUALL\Mu920ProjectK\Windows\ModuleReaderA\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu920ProjectK\Windows\ModuleReaderA\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu920ProjectK\Windows\ModuleReaderA\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectK\Windows\ModuleReaderA\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectM\Windows\ModuleReaderB\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectM\Windows\ModuleReaderB\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectM\Windows\ModuleReaderB\BarChart\obj\Release\BarChart.csprojResolveAssemblyReference.cache
+H:\SysWork\QM\MCUALL\Mu920ProjectM\Windows\ModuleReaderB\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu920ProjectM\Windows\ModuleReaderB\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu920ProjectM\Windows\ModuleReaderB\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectM\Windows\ModuleReaderB\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectO\Windows\ModuleReaderB\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectO\Windows\ModuleReaderB\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectO\Windows\ModuleReaderB\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu920ProjectO\Windows\ModuleReaderB\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu920ProjectO\Windows\ModuleReaderB\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectO\Windows\ModuleReaderB\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectP\Windows\ModuleReaderC\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectP\Windows\ModuleReaderC\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectP\Windows\ModuleReaderC\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu920ProjectP\Windows\ModuleReaderC\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu920ProjectP\Windows\ModuleReaderC\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectP\Windows\ModuleReaderC\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectR\Windows\ModuleReaderD\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectR\Windows\ModuleReaderD\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectR\Windows\ModuleReaderD\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu920ProjectR\Windows\ModuleReaderD\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu920ProjectR\Windows\ModuleReaderD\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectR\Windows\ModuleReaderD\BarChart\obj\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectS\Windows\ModuleReaderD\BarChart\bin\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectS\Windows\ModuleReaderD\BarChart\bin\Release\BarChart.pdb
+H:\SysWork\QM\MCUALL\Mu920ProjectS\Windows\ModuleReaderD\BarChart\obj\Release\BarChart.HBarChart.resources
+H:\SysWork\QM\MCUALL\Mu920ProjectS\Windows\ModuleReaderD\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+H:\SysWork\QM\MCUALL\Mu920ProjectS\Windows\ModuleReaderD\BarChart\obj\Release\BarChart.dll
+H:\SysWork\QM\MCUALL\Mu920ProjectS\Windows\ModuleReaderD\BarChart\obj\Release\BarChart.pdb
+E:\SysWork2\QM1\McuAll2\Mu920ProjectSc\Windows\ModuleReaderDB\BarChart\bin\Release\BarChart.dll
+E:\SysWork2\QM1\McuAll2\Mu920ProjectSc\Windows\ModuleReaderDB\BarChart\bin\Release\BarChart.pdb
+E:\SysWork2\QM1\McuAll2\Mu920ProjectSc\Windows\ModuleReaderDB\BarChart\obj\Release\BarChart.HBarChart.resources
+E:\SysWork2\QM1\McuAll2\Mu920ProjectSc\Windows\ModuleReaderDB\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+E:\SysWork2\QM1\McuAll2\Mu920ProjectSc\Windows\ModuleReaderDB\BarChart\obj\Release\BarChart.dll
+E:\SysWork2\QM1\McuAll2\Mu920ProjectSc\Windows\ModuleReaderDB\BarChart\obj\Release\BarChart.pdb
+E:\SysWork2\RD5\WINDOWS\C#420\ModuleReaderDC\BarChart\bin\Release\BarChart.dll
+E:\SysWork2\RD5\WINDOWS\C#420\ModuleReaderDC\BarChart\bin\Release\BarChart.pdb
+E:\SysWork2\RD5\WINDOWS\C#420\ModuleReaderDC\BarChart\obj\Release\BarChart.HBarChart.resources
+E:\SysWork2\RD5\WINDOWS\C#420\ModuleReaderDC\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+E:\SysWork2\RD5\WINDOWS\C#420\ModuleReaderDC\BarChart\obj\Release\BarChart.dll
+E:\SysWork2\RD5\WINDOWS\C#420\ModuleReaderDC\BarChart\obj\Release\BarChart.pdb
+E:\SysWork3\RD7\Windows\C#420\ModuleReaderHB\BarChart\bin\Release\BarChart.dll
+E:\SysWork3\RD7\Windows\C#420\ModuleReaderHB\BarChart\bin\Release\BarChart.pdb
+E:\SysWork3\RD7\Windows\C#420\ModuleReaderHB\BarChart\obj\Release\BarChart.HBarChart.resources
+E:\SysWork3\RD7\Windows\C#420\ModuleReaderHB\BarChart\obj\Release\BarChart.csproj.GenerateResource.Cache
+E:\SysWork3\RD7\Windows\C#420\ModuleReaderHB\BarChart\obj\Release\BarChart.dll
+E:\SysWork3\RD7\Windows\C#420\ModuleReaderHB\BarChart\obj\Release\BarChart.pdb
