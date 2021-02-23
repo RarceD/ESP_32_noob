@@ -5,6 +5,20 @@
 #define LED_WIFI 2
 #define BUTTON_RESET 22
 
+/*encode reading:
+    GND
+    +
+    SW -> The push button, when push go to low.
+    DT -> delay between CLK
+    CLK ->
+
+*/
+
+#define ENCODER_SW 25
+#define ENCODER_DT 32
+#define ENCODER_CLK 33
+
+#define DEBOUNCED_TIME 300
 
 typedef struct
 {

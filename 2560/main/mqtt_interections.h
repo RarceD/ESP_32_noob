@@ -7,9 +7,29 @@
 
 WiFiClient wifiClient;
 PubSubClient client(wifiClient);
+uint32_t publish_counter = 0;
+
+
 void reconnect();
 void init_mqtt();
 void callback(char *topic, byte *payload, unsigned int length);
+void refresh_msg(uint32_t isrTime);
+
+
+void refresh_msg(uint32_t isrTime)
+{
+    publish_counter++;
+    char json[100];
+    DynamicJsonBuffer jsonBuffer(32);
+    JsonObject &root = jsonBuffer.createObject();
+    root.set("publish", publish_counter);
+    root.set("heap", esp_get_free_heap_size());
+    root.set("heap_min", esp_get_minimum_free_heap_size());
+    root.set("uptime", isrTime);
+    root.printTo(json);
+    client.publish((String(sys.uuid_) + "/uptime").c_str(), (const uint8_t *)json, strlen(json), false);
+    LOGLN("Publish");
+}
 
 void callback(char *topic, byte *payload, unsigned int length)
 {

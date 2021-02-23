@@ -4,75 +4,93 @@
 #include "wifi_config.h"
 #include "pinout.h"
 #include "mqtt_interections.h"
+volatile bool interrupt_flag_right;
+volatile bool interrupt_flag_left;
 
+volatile bool debounced = false;
+
+void IRAM_ATTR isr()
+{
+    interrupt_flag_right = true;
+}
 
 void setup()
 {
     Serial.begin(115200);
+    //Initialize all the controller peripherals:
     pinMode(LED, OUTPUT);
-    pinMode(LED_WIFI, OUTPUT);
     digitalWrite(LED, HIGH);
+    pinMode(LED_WIFI, OUTPUT);
     strcpy(sys.uuid_, UUID);
-    auto_wifi_connect();
-    init_mqtt();
+    // auto_wifi_connect();
+    // init_mqtt();
     config_timer();
     digitalWrite(LED_WIFI, HIGH);
     digitalWrite(LED, LOW);
-    uint32_t millix = millis();
-    digitalWrite(LED, LOW);
 
+    //Define the rotatory encoder:
+    pinMode(ENCODER_CLK, INPUT);
+    pinMode(ENCODER_DT, INPUT);
+    pinMode(ENCODER_SW, INPUT);
+    attachInterrupt(ENCODER_DT, isr, FALLING);
+
+    uint32_t debounced_timer = 0;
+    bool led_off = false;
+    uint32_t test_timer = millis();
     while (true)
-    // for (int i = 0; i < 10; i++)
-    // {
     {
-        // digitalWrite(LED_WIFI, HIGH);
-        // delayMicroseconds(1250);
-        // // delay(1250);
-        // // Serial.print("abcdefg");
-        //         digitalWrite(LED_WIFI, LOW);
-        // // delay(1250);
-        // delayMicroseconds(1250);
-
+        if (xSemaphoreTake(timer_mqtt, 0) == pdTRUE)
+        {
+            digitalWrite(LED, HIGH);
+            uint32_t isrCount = 0, isrTime = 0;
+            // Read the interrupt count and time
+            portENTER_CRITICAL(&timerMux);
+            isrCount = isrCounter;
+            isrTime = lastIsrAt;
+            portEXIT_CRITICAL(&timerMux);
+            LOG("Counter ISR:");
+            LOGLN(isrCount);
+            led_off = true;
+            // LOGLN(sys.selector_auto);
+            // if (isrCount % 2 == 0)
+            //     refresh_msg(isrTime);
+        }
+        if (led_off && millis() - lastIsrAt >= 800)
+        {
+            led_off = false;
+            // digitalWrite(LED, LOW);
+        }
+        if (millis() - test_timer >= 1000)
+        {
+            test_timer = millis();
+            // LOGLN(interrupt_counter);
+        }
+        if (interrupt_flag_right)
+        {
+            if (millis() - debounced_timer >= DEBOUNCED_TIME)
+            {
+                digitalWrite(LED, LOW);
+                delay(2);
+                digitalWrite(LED, HIGH);
+                if (digitalRead(ENCODER_CLK) == LOW)
+                    LOGLN("DERECHA");
+                else
+                    LOGLN("IZQUIERDA");
+                debounced_timer = millis();
+            }
+            interrupt_flag_right = false;
+        }
+        if (digitalRead(ENCODER_SW) == LOW)
+        {
+            LOGLN("PUSH");
+            delay(DEBOUNCED_TIME);
+        }
     }
-    // while (true)
-    // {
+
+    // reconnect();
+    // client.loop();
+
     //     //Handler timers to publish:
-    //     if (xSemaphoreTake(timer_mqtt, 0) == pdTRUE)
-    //     {
-    //         digitalWrite(LED, HIGH);
-    //         uint32_t isrCount = 0, isrTime = 0;
-    //         // Read the interrupt count and time
-    //         portENTER_CRITICAL(&timerMux);
-    //         isrCount = isrCounter;
-    //         isrTime = lastIsrAt;
-    //         portEXIT_CRITICAL(&timerMux);
-    //         LOG("Counter ISR:");
-    //         LOGLN(isrCount);
-    //         // LOGLN(sys.selector_auto);
-    //         if (isrCount % 50 == 0)
-    //         {
-    //             publish_counter++;
-    //             char json[100];
-    //             DynamicJsonBuffer jsonBuffer(32);
-    //             JsonObject &root = jsonBuffer.createObject();
-    //             root.set("publish", publish_counter);
-    //             root.set("heap", esp_get_free_heap_size());
-    //             root.set("heap_min", esp_get_minimum_free_heap_size());
-    //             root.set("uptime", isrTime);
-    //             root.printTo(json);
-    //             client.publish((String(sys.uuid_) + "/uptime").c_str(), (const uint8_t *)json, strlen(json), false);
-    //             LOGLN("Publish");
-    //         }
-    //         sys.led_off = true;
-    //     }
-    //     if (sys.led_off && millis() - lastIsrAt >= 800)
-    //     {
-    //         sys.led_off = false;
-    //         digitalWrite(LED, LOW);
-    //     }
-    //     pg_listen();
-    //     reconnect();
-    //     client.loop();
     //     // Check if the manual timer has finish:
     //     if (millis() - millix >= 50000)
     //     {

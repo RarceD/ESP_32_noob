@@ -1,8 +1,7 @@
 #define TIME_INTERRUPT 30 //SECONDS
 volatile uint32_t isrCounter = 0;
-volatile uint32_t publish_counter = 0;
-
 volatile uint32_t lastIsrAt = 0;
+
 hw_timer_t *timer = NULL;
 volatile SemaphoreHandle_t timer_mqtt;
 portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
