@@ -2,13 +2,12 @@
 #define MQTT_INTERACTIONS
 
 #include "secrets.h"
+#include "pinout.h"
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
-
 WiFiClient wifiClient;
 PubSubClient client(wifiClient);
 uint32_t publish_counter = 0;
-
 
 void reconnect();
 void init_mqtt();
@@ -82,5 +81,7 @@ void reconnect()
         }
     }
 }
+
+
 
 #endif

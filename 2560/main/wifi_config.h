@@ -160,16 +160,16 @@ void auto_wifi_connect()
     EEPROMClass eeprom;
     eeprom.begin(100);
 
-    if (digitalRead(BUTTON_RESET) == LOW)
-    {
-        LOGLN("MANUAL RESET");
-        eeprom.writeString(0, "nop");
-        eeprom.writeString(80, "nop");
-        eeprom.commit();
-        digitalWrite(LED, HIGH);
-        delay(2000);
-        digitalWrite(LED, LOW);
-    }
+    // if (digitalRead(BUTTON_RESET) == LOW)
+    // {
+    //     LOGLN("MANUAL RESET");
+    //     eeprom.writeString(0, "nop");
+    //     eeprom.writeString(80, "nop");
+    //     eeprom.commit();
+    //     digitalWrite(LED, HIGH);
+    //     delay(2000);
+    //     digitalWrite(LED, LOW);
+    // }
     LOGLN("----Alocated on EEPROM:");
     String wifi_flash_memmory_user = eeprom.readString(0);
     String wifi_flash_memmory_pass = eeprom.readString(80);
