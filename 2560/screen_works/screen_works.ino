@@ -21,21 +21,27 @@ void setup()
     Serial.println("ILI9341 Test!");
     tft.begin();
     tft.setRotation(45);
-    tft.fillScreen(ILI9341_BLACK);
-    tft.drawBitmap(40, 0, logo, 240, 240, ILI9341_DARKGREY);
-    delay(1000);
+    tft.fillScreen(ILI9341_WHITE);
+    // tft.drawBitmap(40, 0, logo, 240, 240, ILI9341_DARKGREY);
+
+    int h = 240, w = 240, row, col, buffidx = 0;
+    for (row = 0; row < h; row++)
+        for (col = 0; col < w; col++)
+            tft.drawPixel(col + 40, row, pgm_read_word(color_image + buffidx++));
+
     while (1)
     {
-        tft.setRotation(45);
-        tft.fillScreen(ILI9341_BLACK);
-        tft.drawBitmap(20, 50, sprinkler, 100, 100, ILI9341_NAVY);
-        tft.drawBitmap(200, 50, irrigating, 100, 100, ILI9341_GREENYELLOW);
-        tft.drawBitmap(0, 190, wifi, 50, 50, ILI9341_PURPLE);
-        // tft.setCursor(100,200);
+        // tft.fillScreen(ILI9341_WHITE);
+        // tft.setRotation(45);
+        // delay(2000);
+        // tft.fillScreen(ILI9341_BLACK);
+        // tft.drawBitmap(20, 50, sprinkler, 100, 100, ILI9341_NAVY);
+        // tft.drawBitmap(200, 50, irrigating, 100, 100, ILI9341_GREENYELLOW);
+        // tft.drawBitmap(0, 190, wifi, 50, 50, ILI9341_PURPLE);
         // tft.setTextColor(ILI9341_WHITE);
         // tft.setTextSize(3);
         // tft.println("Valve 1: ON");
-        delay(5000);
+        // delay(1000);
         //tft.fillScreen(ILI9341_GREEN);
         //delay(1000);
         //tft.fillScreen(ILI9341_YELLOW);
