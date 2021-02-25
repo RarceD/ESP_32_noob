@@ -1,36 +1,53 @@
-#include "SPI.h"
-#include "Adafruit_GFX.h"
-#include "Adafruit_ILI9341.h"
-#include "logos.h"
 
-#define _cs 5    // 3 goes to TFT CS
-#define _dc 2    // 4 goes to TFT DC
-#define _mosi 23 // 5 goes to TFT MOSI
-#define _sclk 18 // 6 goes to TFT SCK/CLK
-#define _rst 4   // ESP RST to TFT RESET
-#define _miso    // Not connected
+#include "screens.h"
+
 //       3.3V     // Goes to TFT LED
 //       5v       // Goes to TFT Vcc
 //       Gnd      // Goes to TFT Gnd
 
-Adafruit_ILI9341 tft = Adafruit_ILI9341(_cs, _dc, _mosi, _sclk, _rst);
-
 void setup()
 {
-    Serial.begin(9600);
-    Serial.println("ILI9341 Test!");
-    tft.begin();
-    tft.setRotation(45);
+    Serial.begin(115200);
+    init_windows();
+    delay(1000);
+    // main_window();
+    int counter = 0;
+    counter++;
     tft.fillScreen(ILI9341_WHITE);
-    // tft.drawBitmap(40, 0, logo, 240, 240, ILI9341_DARKGREY);
 
-    int h = 240, w = 240, row, col, buffidx = 0;
-    for (row = 0; row < h; row++)
-        for (col = 0; col < w; col++)
-            tft.drawPixel(col + 40, row, pgm_read_word(color_image + buffidx++));
-
+    uint32_t millix = millis();
     while (1)
     {
+        if (Serial.available())
+        {
+            int a = Serial.read();
+            if (a == 97)
+            {
+
+                tft.fillScreen(ILI9341_BLACK);
+                Serial.println(++counter);
+            }
+        }
+
+        if (millis() - millix >= 3000)
+        {
+            switch (counter)
+            {
+            case 1:
+                config_window();
+
+                break;
+            case 2:
+                config_window_2();
+
+                break;
+
+            default:
+                break;
+            }
+            Serial.println("input trigger");
+            millix = millis();
+        }
         // tft.fillScreen(ILI9341_WHITE);
         // tft.setRotation(45);
         // delay(2000);
