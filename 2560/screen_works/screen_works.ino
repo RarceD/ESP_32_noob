@@ -1,20 +1,22 @@
 
 #include "screens.h"
 
-//       3.3V     // Goes to TFT LED
-//       5v       // Goes to TFT Vcc
-//       Gnd      // Goes to TFT Gnd
-
 void setup()
 {
     Serial.begin(115200);
     init_windows();
-    delay(1000);
     // main_window();
     int counter = 0;
     counter++;
-    tft.fillScreen(ILI9341_WHITE);
-
+    uint8_t cursor_indicator = 0;
+    tft.fillScreen(ILI9341_BLACK);
+    delay(100);
+    tft.drawBitmap(0, 0, sprinkler, 100, 100, ILI9341_YELLOW);
+    tft.drawBitmap(0, 0, back, 100, 100, ILI9341_YELLOW);
+    tft.drawBitmap(0, 0, back, 100, 100, ILI9341_BLUE);
+    while (1)
+    {
+    }
     uint32_t millix = millis();
     while (1)
     {
@@ -23,13 +25,22 @@ void setup()
             int a = Serial.read();
             if (a == 97)
             {
-
                 tft.fillScreen(ILI9341_BLACK);
                 Serial.println(++counter);
             }
+            //If I press the b Y move the indicator:
+
+            if (a == 98)
+            {
+                if (cursor_indicator >= 2)
+                    cursor_indicator = 0;
+                else
+                    cursor_indicator++;
+                counter = 2;
+            }
         }
 
-        if (millis() - millix >= 3000)
+        if (millis() - millix >= 500)
         {
             switch (counter)
             {
@@ -38,7 +49,7 @@ void setup()
 
                 break;
             case 2:
-                config_window_2();
+                config_window_2(cursor_indicator);
 
                 break;
 
