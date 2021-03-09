@@ -1090,3 +1090,15 @@
 50	100	6369790001271986	bootloader/bootloader.elf	674864afc17ca74b
 50	100	6369790001271986	bootloader/bootloader.bin	674864afc17ca74b
 50	100	6369790001271986	bootloader/bootloader.map	674864afc17ca74b
+17	4879	6369833789717553	build.ninja	463280473a4330a0
+136	211	6369790001271986	bootloader-prefix/src/bootloader-stamp/bootloader-build	674864afc17ca74b
+136	211	6369790001271986	bootloader/bootloader.elf	674864afc17ca74b
+136	211	6369790001271986	bootloader/bootloader.bin	674864afc17ca74b
+136	211	6369790001271986	bootloader/bootloader.map	674864afc17ca74b
+139	302	6369833793996096	esp-idf/app_update/CMakeFiles/__idf_app_update.dir/esp_app_desc.c.obj	4a82631ea067aba9
+302	369	6369833794674282	esp-idf/app_update/libapp_update.a	c9fa3c771dc5438b
+143	486	6369833795831570	esp-idf/main/CMakeFiles/__idf_main.dir/gatts_demo.c.obj	79723c39c3b6aa89
+486	544	6369833796419615	esp-idf/main/libmain.a	7c8e751bd46f3d27
+545	1781	6369833808643084	esp-idf/esp32/ld/esp32.project.ld	813c2cea499b61b3
+1781	5365	6369833844361499	gatt_server_demos.elf	4dfcced924cd9cd3
+5366	5658	6369833847514262	.bin_timestamp	b15359c922f58034
