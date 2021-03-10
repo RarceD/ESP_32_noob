@@ -1,1 +1,11 @@
 For printing:
+\
+idf.py -p COM5 flash -b 921600
+
+
+for creating a component i just have to:
+    -
+add the:
+idf_component_register(SRCS "car.c"
+                  INCLUDE_DIRS "."
+                  REQUIRES main)

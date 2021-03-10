@@ -504,3 +504,10 @@ C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp
 C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/main/CMakeFiles/rebuild_cache.dir
 C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/main/CMakeFiles/list_install_components.dir
 C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/main/CMakeFiles/install/strip.dir
+C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/irrigarion_controller/CMakeFiles/__idf_irrigarion_controller.dir
+C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/irrigarion_controller/CMakeFiles/install/local.dir
+C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/irrigarion_controller/CMakeFiles/install.dir
+C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/irrigarion_controller/CMakeFiles/edit_cache.dir
+C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/irrigarion_controller/CMakeFiles/rebuild_cache.dir
+C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/irrigarion_controller/CMakeFiles/list_install_components.dir
+C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/irrigarion_controller/CMakeFiles/install/strip.dir

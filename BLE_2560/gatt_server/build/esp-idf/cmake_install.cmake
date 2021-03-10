@@ -99,6 +99,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/unity/cmake_install.cmake")
   include("C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/wifi_provisioning/cmake_install.cmake")
   include("C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/main/cmake_install.cmake")
+  include("C:/Users/Tecnica2/Desktop/esp-idf/esp/ESP_32_noob/BLE_2560/gatt_server/build/esp-idf/irrigarion_controller/cmake_install.cmake")
 
 endif()
 
